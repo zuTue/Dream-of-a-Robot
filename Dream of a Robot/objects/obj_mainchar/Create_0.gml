@@ -1,3 +1,16 @@
+function set_on_ground(_val = true)
+{
+	if _val == true
+	{
+		onGround = true; 
+		coyoteHangTimer = coyoteHangFrames;
+	} else {
+		onGround = false;
+		coyoteHangTimer = 0;
+	}
+}
+
+
 controls_setup()
 
 //Movimento
@@ -15,17 +28,17 @@ jumpMax = 1;
 jumpCount = 0;
 jumpHoldTimer = 0;
 
-jumpHoldFrames[0] = 16;
+jumpHoldFrames[0] = 12;
 jspd[0] = -3.15;
-jumpHoldFrames[1] = 10;
-jspd[0] = -2;
+jumpHoldFrames[1] = 8;
+jspd[0] = -2.85;
 
 	//Coyote Time
 	/*Hang time 
 	(Hang no caso é tipo o desenho msm, ficar andando no ar sem gravidade tomar efeito por uns frames)*/
-	coyoteHangFrames = 2;
+	coyoteHangFrames = 4;
 	coyoteHangTimer = 0;
 	
 	//Buffer pro pulo
-	coyoteJumpFrames = 5;
+	coyoteJumpFrames = 2;
 	coyoteJumpTimer = 0;

@@ -70,7 +70,6 @@
   },
   "name":"Dream of a Robot",
   "resources":[
-    {"id":{"name":"Font1","path":"fonts/Font1/Font1.yy",},},
     {"id":{"name":"input_controller_object","path":"objects/input_controller_object/input_controller_object.yy",},},
     {"id":{"name":"obj_cam","path":"objects/obj_cam/obj_cam.yy",},},
     {"id":{"name":"obj_mainchar","path":"objects/obj_mainchar/obj_mainchar.yy",},},

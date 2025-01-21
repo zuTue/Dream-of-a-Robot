@@ -22,7 +22,13 @@ x += xspd;
 #endregion
 
 #region Mov. Vertical (Y Mov)
-yspd += grav;
+if coyoteHangTimer > 0
+{
+	coyoteHangTimer--;
+} else {
+	yspd += grav;
+	set_on_ground(false);
+}
 
 if yspd > termVel {yspd = termVel};
 
@@ -30,11 +36,11 @@ if onGround
 {
 	jumpCount = 0;
 	jumpHoldTimer = 0;
+	
+	coyoteJumpTimer = coyoteJumpFrames
 } else {
-	if jumpCount == 0
-	{
-		jumpCount = 1
-	}
+	coyoteJumpTimer--;
+	if jumpCount == 0 && coyoteJumpTimer <= 0 {jumpCount = 1};
 }
 
 if jumpKeyBuff && jumpCount < jumpMax
@@ -45,6 +51,8 @@ if jumpKeyBuff && jumpCount < jumpMax
 	jumpCount++;
 	
 	jumpHoldTimer = jumpHoldFrames[jumpCount-1];
+	set_on_ground(false);
+	coyoteJumpTimer = 0;
 }
 if !jumpKey
 {
@@ -53,7 +61,7 @@ if !jumpKey
 
 if jumpHoldTimer > 0
 {
-	yspd = jspd;
+	yspd = jspd[jumpCount-1];
 	jumpHoldTimer--;
 }
 
@@ -75,12 +83,8 @@ if place_meeting(x, y + yspd, obj_wall)
 
 if yspd >= 0  && place_meeting(x, y+1, obj_wall)
 {
-	onGround = true;
-} else 
-{
-	onGround = false;
-	
-}
+	set_on_ground(true);
+} 
 
 y += yspd;
 
