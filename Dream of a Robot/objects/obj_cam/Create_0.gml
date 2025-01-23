@@ -1,5 +1,5 @@
-cam_width = 640;
-cam_height = 360;
+cam_width = 320;
+cam_height = 180;
 
 follow = obj_mainchar
 

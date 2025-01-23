@@ -5,16 +5,32 @@ moveDir = rightKey - leftKey;
 
 xspd = moveDir * moveSpd;
 
+#region Colisão
 var _subPixel = .5;
 if place_meeting(x + xspd, y, obj_wall)
 {
-	var _pixelCheck = _subPixel * sign(xspd);
-	while !place_meeting(x + _pixelCheck, y, obj_wall)
+	//Slope
+	if !place_meeting(x + xspd, y - abs(xspd)-1, obj_wall)
 	{
-		x += _pixelCheck;
+		while place_meeting(x + xspd, y, obj_wall) 
+			{ y -= _subPixel };
 	}
+	else {
+		var _pixelCheck = _subPixel * sign(xspd);
+		while !place_meeting(x + _pixelCheck, y, obj_wall)
+		{
+			x += _pixelCheck;
+		}
 	
 	xspd = 0;
+	}
+}
+#endregion 
+
+if yspd >= 0 && !place_meeting(x + xspd, y+1, obj_wall) && place_meeting(x + xspd, y+abs(xspd)+1, obj_wall)
+{
+	while !place_meeting(x + xspd, y + _subPixel, obj_wall) 
+		{y += _subPixel };
 }
 
 x += xspd;
@@ -22,6 +38,7 @@ x += xspd;
 #endregion
 
 #region Mov. Vertical (Y Mov)
+#region Coyote Time
 if coyoteHangTimer > 0
 {
 	coyoteHangTimer--;
@@ -29,6 +46,7 @@ if coyoteHangTimer > 0
 	yspd += grav;
 	set_on_ground(false);
 }
+
 
 if yspd > termVel {yspd = termVel};
 
@@ -42,7 +60,9 @@ if onGround
 	coyoteJumpTimer--;
 	if jumpCount == 0 && coyoteJumpTimer <= 0 {jumpCount = 1};
 }
+#endregion
 
+#region Jump buffering
 if jumpKeyBuff && jumpCount < jumpMax
 {
 	jumpKeyBuff  = false;
@@ -64,7 +84,9 @@ if jumpHoldTimer > 0
 	yspd = jspd[jumpCount-1];
 	jumpHoldTimer--;
 }
+#endregion
 
+#region Colisões
 if place_meeting(x, y + yspd, obj_wall)
 {
 	var _pixelCheck = _subPixel * sign(yspd);
@@ -87,5 +109,6 @@ if yspd >= 0  && place_meeting(x, y+1, obj_wall)
 } 
 
 y += yspd;
+#endregion
 
 #endregion
