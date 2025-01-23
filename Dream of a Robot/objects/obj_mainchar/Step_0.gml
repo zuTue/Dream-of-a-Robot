@@ -15,11 +15,18 @@ if place_meeting(x + xspd, y, obj_wall)
 		while place_meeting(x + xspd, y, obj_wall) 
 			{ y -= _subPixel };
 	}
-	else {
-		var _pixelCheck = _subPixel * sign(xspd);
-		while !place_meeting(x + _pixelCheck, y, obj_wall)
+	else 
+	{
+		//slope de teto
+		if !place_meeting(x + xspd, y+abs(xspd)+1, obj_wall)
 		{
-			x += _pixelCheck;
+			while place_meeting(x + xspd, y, obj_wall)
+				{y += _subPixel}
+		}
+		else
+		{
+			var _pixelCheck = _subPixel * sign(xspd);
+			while !place_meeting(x + _pixelCheck, y, obj_wall) { x += _pixelCheck; }
 		}
 	
 	xspd = 0;
@@ -95,10 +102,8 @@ if place_meeting(x, y + yspd, obj_wall)
 		y += _pixelCheck;
 	}
 	
-	if yspd < 0 
-	{
-		jumpHoldTimer = 0;
-	}
+	//bonk
+	if yspd < 0 { jumpHoldTimer = 0;}
 	
 	yspd = 0;
 }
